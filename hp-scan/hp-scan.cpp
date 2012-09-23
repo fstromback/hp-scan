@@ -37,7 +37,7 @@ bool doScan(Connection &conn) {
 	if (!configMsg.ok()) return false;
 	Configuration config(configMsg);
 
-	config.dpi = 100;
+	config.dpi = 600;
 	config.colorType2 = 1;
 	
 	BmpImage *bmpImage = new BmpImage(new std::ofstream("img.bmp", std::ios::binary | std::ios::out));

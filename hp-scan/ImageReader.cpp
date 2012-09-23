@@ -6,7 +6,7 @@
 
 using namespace std;
 
-ImageReader::ImageReader(Configuration &config, Image *to) : buffer(config.xPixels(), config.yPixels(), 3), to(to), config(config), dumper("dump.dat", ios::out | ios::binary) {
+ImageReader::ImageReader(Configuration &config, Image *to) : buffer(config.xPixels(), config.yPixels(), 3), to(to), config(config) {
 	to->initialize(config.xPixels(), config.yPixels());
 }
 

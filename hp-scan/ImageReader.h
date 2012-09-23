@@ -23,6 +23,4 @@ private:
 	Image *to;
 
 	enum { headerSize = 24 };
-
-	std::ofstream dumper;
 };

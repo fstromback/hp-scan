@@ -59,7 +59,8 @@ nat Configuration::xPixels() const {
 				return round2((dx / ((double) MAX_X_S)) * 5088);
 			case 1200:
 				return round2((dx / ((double) MAX_X_S)) * 10208);
-		}
+		}
+
 		return 0;*/
 	
 }
@@ -84,7 +85,8 @@ nat Configuration::yPixels() const {
 				return round2((dy / ((double) MAX_Y_S)) * 7020);
 			case 1200:
 				return round2((dy / ((double) MAX_Y_S)) * 14025);
-		}
+		}
+
 		return 0;*/
 	
 }
