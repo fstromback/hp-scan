@@ -14,17 +14,17 @@ public:
 	virtual ~PngImage();
 
 	virtual void initialize(nat w, nat h);
-	virtual void addPixel(byte r, byte g, byte b);
-	virtual void flush();
+	virtual void addLine(Color *scanline);
+	virtual void finish();
 private:
 	ostream *to;
 	png_structp pngPtr;
 	png_infop pngInfo;
-	nat rowAtX;
+
 	nat rowAtY;
 	nat width;
 	nat height;
-	byte *row;
+	byte *tmpLine;
 
 	void initPng();
 

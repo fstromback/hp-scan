@@ -4,7 +4,7 @@
 PngImage::PngImage(ostream *to) : to(to) {
 	pngPtr = null;
 	pngInfo = null;
-	row = null;
+	tmpLine = null;
 	initPng();
 }
 
@@ -12,14 +12,14 @@ PngImage::~PngImage() {
 	if (pngInfo) png_free_data(pngPtr, pngInfo, PNG_FREE_ALL, -1);
 	if (pngPtr) png_destroy_write_struct(&pngPtr, (png_infopp)null);
 
-	if (row) delete row;
+	if (tmpLine) delete tmpLine;
 	if (to) delete to;
 }
 
 void PngImage::initialize(nat w, nat h) {
 	if (pngInfo == null) return;
 
-	png_set_read_fn(pngPtr, this, &PngImage::read);
+	//png_set_read_fn(pngPtr, this, &PngImage::read);
 	png_set_write_fn(pngPtr, this, &PngImage::write, &PngImage::flushPng);
 
 	png_set_IHDR(pngPtr, pngInfo, w, h, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
@@ -32,28 +32,29 @@ void PngImage::initialize(nat w, nat h) {
 
 	png_write_info(pngPtr, pngInfo);
 
-	row = new byte[w * 3];
-	rowAtX = 0;
+	tmpLine = new byte[w * 3];
 	rowAtY = 0;
 	width = w;
 	height = h;
 }
 
-void PngImage::addPixel(byte r, byte g, byte b) {
+void PngImage::addLine(Color *scanline) {
 	if (rowAtY >= height) return;
+	rowAtY++;
 
-	row[rowAtX++] = r;
-	row[rowAtX++] = g;
-	row[rowAtX++] = b;
-	if (rowAtX >= width * 3) {
-		png_write_row(pngPtr, row);
-
-		rowAtX = 0;
-		rowAtY++;
+	byte *at = tmpLine;
+	for (nat i = 0; i < width; i++) {
+		*(at++) = scanline[i].r;
+		*(at++) = scanline[i].g;
+		*(at++) = scanline[i].b;
 	}
+
+	png_write_row(pngPtr, tmpLine);
 }
 
-void PngImage::flush() {
+
+void PngImage::finish() {
+	BOOST_ASSERT(rowAtY == height);
 	png_write_end(pngPtr, pngInfo);
 }
 

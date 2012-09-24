@@ -178,6 +178,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Color.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Configuration.cpp"
 				>
 			</File>
@@ -206,10 +210,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\RandomAccessImage.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\stdafx.cpp"
 				>
 			</File>
@@ -221,6 +221,10 @@
 			>
 			<File
 				RelativePath=".\BmpImage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Color.h"
 				>
 			</File>
 			<File
@@ -245,10 +249,6 @@
 			</File>
 			<File
 				RelativePath=".\PngImage.h"
-				>
-			</File>
-			<File
-				RelativePath=".\RandomAccessImage.h"
 				>
 			</File>
 			<File

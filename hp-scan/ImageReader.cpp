@@ -6,12 +6,15 @@
 
 using namespace std;
 
-ImageReader::ImageReader(Configuration &config, Image *to) : buffer(config.xPixels(), config.yPixels(), 3), to(to), config(config) {
+ImageReader::ImageReader(Configuration &config, Image *to) : to(to), config(config) {
+	scanline = new Color[config.xPixels()];
+	flushedLines = 0;
 	to->initialize(config.xPixels(), config.yPixels());
 }
 
 ImageReader::~ImageReader() {
-	buffer.flush(to);
+	fillImage();
+	to->finish();
 	delete to;
 }
 
@@ -25,21 +28,40 @@ void ImageReader::addData(Message &data) {
 
 	cout << dec << setw(5) << "Packet: " << type << " " << line << " " << height << " " << mode << " " << width << " " << width2 << " " << data.getSize() - headerSize << endl;
 	
-	BOOST_ASSERT(type == 10); //The only one tested so far.
+	//BOOST_ASSERT(type == 10); //The only one tested so far.
 
 	nat myWidth = config.xPixels();
 	for (nat y = 0; y < height; y++) {
 		const byte *d = data.getData() + headerSize + (y * width);
+
 		nat totalY = line + y;
 		nat channel = totalY % 3;
-		totalY /= 3;
-		for (nat x = 0; x < myWidth; x++) {
-			buffer.at(x, totalY, channel) = *d;
-			d++;
-		}
+
+		addScanline(d, myWidth, channel);
+		if (channel == 2) flushScanline();
 	}
 }
 
+void ImageReader::addScanline(const byte *data, nat width, nat channel) {
+	for (nat x = 0; x < width; x++, data++) {
+		scanline[x][channel] = *data;
+	}
+}
+
+void ImageReader::flushScanline() {
+	to->addLine(scanline);
+	flushedLines++;
+}
+
+void ImageReader::fillImage() {
+	nat h = config.yPixels();
+	nat w = config.xPixels();
+
+	if (flushedLines < h) for (int x = 0; x < w; x++) scanline[x] = Color(255, 255, 255);
+	while (flushedLines < h) {
+		flushScanline();
+	}
+}
 
 void ImageReader::dump() {
 	cout << dec;

@@ -53,4 +53,5 @@ public:
 	static Message getConfig();
 	static Message setConfig(const Message &from);
 	static Message startScan();
+	static Message askAdf();
 };

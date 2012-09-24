@@ -120,3 +120,7 @@ Message Message::setConfig(const Message &from) {
 Message Message::startScan() {
 	return Message(0, 0x2);
 }
+
+Message Message::askAdf() {
+	return Message(0, 0xF);
+}

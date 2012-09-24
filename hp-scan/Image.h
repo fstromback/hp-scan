@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Color.h"
 
 class Image {
 public:
@@ -7,6 +8,6 @@ public:
 	virtual ~Image();
 
 	virtual void initialize(nat w, nat h) = 0;
-	virtual void addPixel(byte r, byte g, byte b) = 0;
-	virtual void flush() = 0;
+	virtual void addLine(Color *scanline) = 0;
+	virtual void finish() = 0;
 };

@@ -2,7 +2,6 @@
 
 #include "Configuration.h"
 #include "Image.h"
-#include "RandomAccessImage.h"
 
 #include <fstream>
 #include <queue>
@@ -19,8 +18,12 @@ private:
 	ImageReader(const ImageReader &o);
 	Configuration config;
 	
-	RandomAccessImage buffer;
 	Image *to;
+	Color *scanline;
+	nat flushedLines;
 
 	enum { headerSize = 24 };
+	void addScanline(const byte *data, nat width, nat channel);
+	void flushScanline();
+	void fillImage();
 };

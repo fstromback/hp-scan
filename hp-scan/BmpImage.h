@@ -10,10 +10,12 @@ public:
 	virtual ~BmpImage();
 
 	virtual void initialize(nat w, nat h);
-	virtual void addPixel(byte r, byte g, byte b);
-	virtual void flush();
+	virtual void addLine(Color *line);
+	virtual void finish();
 private:
 	std::ostream *to;
+
+	enum { bmpHeaderSize = 14, bmpInfoHeaderSize = 40 };
 
 	struct BmpHeader {
 		nat size;
@@ -35,10 +37,14 @@ private:
 		nat colorsImportant;
 	};
 
-	nat atX;
 	nat atY;
 	nat w;
 	nat h;
+	nat scanlineWidth;
 
-	void fill();
+	void writeBmpHeader();
+	void writeBmpInfoHeader();
+
+	void write(nat i);
+	void write(short i);
 };
