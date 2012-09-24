@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="E:/visual studio 2008/lib/boost_1_50_0/"
+				AdditionalIncludeDirectories="E:/visual studio 2008/lib/boost_1_50_0/; E:/visual studio 2008/lib/lpng1060/; E:/visual studio 2008/lib/zlib/"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,6 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="../lib/zlibd.lib ../lib/libpngd.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -133,6 +134,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="lib/libpng.lib lib/zlib.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -200,6 +202,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PngImage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\RandomAccessImage.cpp"
 				>
 			</File>
@@ -235,6 +241,10 @@
 			</File>
 			<File
 				RelativePath=".\Message.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PngImage.h"
 				>
 			</File>
 			<File

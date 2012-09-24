@@ -3,6 +3,7 @@
 #include "Connection.h"
 #include "Image.h"
 #include "BmpImage.h"
+#include "PngImage.h"
 #include "ImageReader.h"
 #include "Configuration.h"
 #include "RandomAccessImage.h"
@@ -37,12 +38,13 @@ bool doScan(Connection &conn) {
 	if (!configMsg.ok()) return false;
 	Configuration config(configMsg);
 
-	config.dpi = 600;
+	config.dpi = 75;
 	config.colorType2 = 1;
 	
-	BmpImage *bmpImage = new BmpImage(new std::ofstream("img.bmp", std::ios::binary | std::ios::out));
+	//BmpImage *bmpImage = new BmpImage(new std::ofstream("img.bmp", std::ios::binary | std::ios::out));
+	PngImage *pngImage = new PngImage(new std::ofstream("img.png", std::ios::binary | std::ios::out));
 	//ImageReader img(config, new RandomAccessImage(bmpImage));
-	ImageReader img(config, bmpImage);
+	ImageReader img(config, pngImage);
 
 	Message::setConfig(config).dump();
 	conn.send(Message::setConfig(config));
