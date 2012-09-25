@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
 
 	Scanner scanner("192.168.0.108");
 
-	ImageOutput<PngImage> output("output2_");
+	ImageOutput<PngImage> output("output_");
 	if (scanner.scan(output)) cout << "Done!" << endl;
 	else cout << "Failed: " << scanner.getLastError() << endl;
 

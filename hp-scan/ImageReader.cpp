@@ -52,7 +52,7 @@ bool ImageReader::addData(Message &data) {
 			nat totalY = line + y;
 			nat channel = totalY % 3;
 
-			addReverseScanline(d, myWidth, channel);
+			addReverseScanline(d + (width - myWidth), myWidth, channel);
 			if (channel == 2) flushScanline();
 		}
 

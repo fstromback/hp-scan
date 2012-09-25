@@ -98,7 +98,7 @@ bool Scanner::scanInternal(Output &to) {
 
 	bool morePages = true;
 	while (morePages) {
-		logTo << "Scanning page " << pageNumber << "..." << endl;
+		logTo << "Scanning page " << ++pageNumber << "..." << endl;
 
 		ImageReader reader(c, to.nextPage());
 		if (!scanPage(reader)) return false;
