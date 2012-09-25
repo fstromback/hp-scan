@@ -206,7 +206,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Output.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\PngImage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Scanner.cpp"
 				>
 			</File>
 			<File
@@ -240,6 +248,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ImageOutput.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ImageReader.h"
 				>
 			</File>
@@ -248,7 +260,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Output.h"
+				>
+			</File>
+			<File
 				RelativePath=".\PngImage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Scanner.h"
 				>
 			</File>
 			<File

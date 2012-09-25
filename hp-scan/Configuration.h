@@ -4,6 +4,7 @@
 
 class Configuration {
 public:
+	Configuration();
 	Configuration(const Message &msg);
 
 	operator Message() const;
@@ -19,7 +20,9 @@ public:
 	nat xPixels() const;
 	nat yPixels() const;
 
+	void apply(const Configuration &other);
 	void dump();
 private:
+	bool validSettings;
 	Message settings;
 };

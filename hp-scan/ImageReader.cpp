@@ -18,7 +18,7 @@ ImageReader::~ImageReader() {
 	delete to;
 }
 
-void ImageReader::addData(Message &data) {
+bool ImageReader::addData(Message &data) {
 	nat type = data.getNat(0 * 4);
 	nat line = data.getNat(1 * 4);
 	nat height = data.getNat(2 * 4);
@@ -30,16 +30,45 @@ void ImageReader::addData(Message &data) {
 	
 	//BOOST_ASSERT(type == 10); //The only one tested so far.
 
-	nat myWidth = config.xPixels();
-	for (nat y = 0; y < height; y++) {
-		const byte *d = data.getData() + headerSize + (y * width);
+	if (type == 10) {
 
-		nat totalY = line + y;
-		nat channel = totalY % 3;
+		nat myWidth = config.xPixels();
+		for (nat y = 0; y < height; y++) {
+			const byte *d = data.getData() + headerSize + (y * width);
 
-		addScanline(d, myWidth, channel);
-		if (channel == 2) flushScanline();
+			nat totalY = line + y;
+			nat channel = totalY % 3;
+
+			addScanline(d, myWidth, channel);
+			if (channel == 2) flushScanline();
+		}
+
+		return true;
+	} else if (type == 12) {
+		nat myWidth = config.xPixels();
+		for (nat y = 0; y < height; y++) {
+			const byte *d = data.getData() + headerSize + (y * width);
+
+			nat totalY = line + y;
+			nat channel = totalY % 3;
+
+			addReverseScanline(d, myWidth, channel);
+			if (channel == 2) flushScanline();
+		}
+
+		return true;
 	}
+
+	return false;
+}
+
+void ImageReader::addReverseScanline(const byte *data, nat width, nat channel) {
+	nat x = width;
+	do {
+		x--;
+		scanline[x][channel] = *data;
+		data++;
+	} while (x > 0);
 }
 
 void ImageReader::addScanline(const byte *data, nat width, nat channel) {
@@ -57,7 +86,7 @@ void ImageReader::fillImage() {
 	nat h = config.yPixels();
 	nat w = config.xPixels();
 
-	if (flushedLines < h) for (int x = 0; x < w; x++) scanline[x] = Color(255, 255, 255);
+	if (flushedLines < h) for (nat x = 0; x < w; x++) scanline[x] = Color(255, 255, 255);
 	while (flushedLines < h) {
 		flushScanline();
 	}

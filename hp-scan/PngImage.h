@@ -16,6 +16,7 @@ public:
 	virtual void initialize(nat w, nat h);
 	virtual void addLine(Color *scanline);
 	virtual void finish();
+	static string extension() { return "png"; };
 private:
 	ostream *to;
 	png_structp pngPtr;

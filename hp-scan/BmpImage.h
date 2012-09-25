@@ -12,30 +12,11 @@ public:
 	virtual void initialize(nat w, nat h);
 	virtual void addLine(Color *line);
 	virtual void finish();
+	static string extension() { return "bmp"; };
 private:
 	std::ostream *to;
 
 	enum { bmpHeaderSize = 14, bmpInfoHeaderSize = 40 };
-
-	struct BmpHeader {
-		nat size;
-		nat reserved;
-		nat offset;
-	};
-
-	struct BmpInfoHeader {
-		nat size;
-		nat width;
-		nat height;
-		short planes;
-		short bpp;
-		nat compression;
-		nat sizeOfBmp;
-		nat horzResolution;
-		nat vertResolution;
-		nat colorsUsed;
-		nat colorsImportant;
-	};
 
 	nat atY;
 	nat w;

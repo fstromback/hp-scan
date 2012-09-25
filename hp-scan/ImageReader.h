@@ -11,7 +11,7 @@ public:
 	ImageReader(Configuration &description, Image *to);
 	~ImageReader();
 
-	void addData(Message &data);
+	bool addData(Message &data);
 
 	void dump();
 private:
@@ -24,6 +24,7 @@ private:
 
 	enum { headerSize = 24 };
 	void addScanline(const byte *data, nat width, nat channel);
+	void addReverseScanline(const byte *data, nat width, nat channel);
 	void flushScanline();
 	void fillImage();
 };

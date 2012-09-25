@@ -5,7 +5,9 @@
 
 using namespace std;
 
-Configuration::Configuration(const Message &msg) : settings(msg) {
+Configuration::Configuration() : validSettings(false) {}
+
+Configuration::Configuration(const Message &msg) : validSettings(true), settings(msg) {
 	brightness = msg.getNat(1 * 4);
 	contrast = msg.getNat(2 * 4);
 	dpi = msg.getNat(3 * 4);
@@ -17,7 +19,21 @@ Configuration::Configuration(const Message &msg) : settings(msg) {
 	yMax = msg.getNat(18 * 4);
 }
 
+void Configuration::apply(const Configuration &other) {
+	brightness = other.brightness;
+	contrast = other.contrast;
+	dpi = other.dpi;
+	colorType = other.colorType;
+	colorType2 = other.colorType2;
+	xMin = other.xMin;
+	xMax = other.xMax;
+	yMin = other.yMin;
+	yMax = other.yMax;
+}
+
 Configuration::operator Message() const {
+	BOOST_ASSERT(validSettings);
+
 	Message r = settings;
 	r.setNat(1 * 4, brightness);
 	r.setNat(2 * 4, contrast);
