@@ -6,14 +6,14 @@ Progress::Progress(ostream &to, const string &message, nat maxProgress) : to(to)
 }
 
 Progress::~Progress() {
-	print(max);
+	//print(max);
 	to << endl;
 }
 
 
 void Progress::update(nat v) {
-	print(v);
 	to << '\r';
+	print(v);
 }
 
 void Progress::print(nat v) {
