@@ -35,8 +35,11 @@
 ehthumbs.db
 Icon?
 Thumbs.db
+*~
 
 Debug/
+hp-scan/build/
+hp-scan/hp-scan
 *.dat
 *.bmp
 *.png

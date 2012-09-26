@@ -5,8 +5,10 @@
 #include "ImageOutput.h"
 #include "Commands.h"
 
+#ifdef WIN32
 #include <conio.h>
 #include <Windows.h>
+#endif
 
 using namespace std;
 
@@ -57,7 +59,9 @@ int main(int argc, char* argv[]) {
 
 	}
 
+#ifdef WIN32
 	getch();
+#endif
 	return result;
 }
 

@@ -2,7 +2,7 @@
 
 #include "Image.h"
 
-#include "png.h"
+#include <png.h>
 
 #include <string>
 
