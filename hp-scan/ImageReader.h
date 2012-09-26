@@ -1,22 +1,23 @@
 #pragma once
 
-#include "Configuration.h"
+#include "ScannerConfiguration.h"
 #include "Image.h"
+#include "Progress.h"
 
 #include <fstream>
 #include <queue>
 
 class ImageReader {
 public:
-	ImageReader(Configuration &description, Image *to);
+	ImageReader(ScannerConfiguration &description, Image *to);
 	~ImageReader();
 
-	bool addData(Message &data);
+	nat addData(Message &data, Progress &p);
 
 	void dump();
 private:
 	ImageReader(const ImageReader &o);
-	Configuration config;
+	ScannerConfiguration config;
 	
 	Image *to;
 	Color *scanline;

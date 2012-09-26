@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Scanner.h"
 
-Scanner::Scanner(const string &host, ostream &logTo /* = cout */) : logTo(logTo), connection(host) {}
+Scanner::Scanner(const string &host, const string &port, ostream &logTo /* = cout */) : logTo(logTo), connection(host, port) {}
 
 bool Scanner::initializeScan() {
 	Message m;
@@ -39,37 +39,51 @@ bool Scanner::usingAdf() {
 	return m.getHeader().r1 == 1;
 }
 
-bool Scanner::getConfiguration(Configuration &to) {
+bool Scanner::getConfiguration(ScannerConfiguration &to) {
 	connection.send(Message::getConfig());
 	Message m = connection.receive();
 	if (!m.ok()) return false;
-	to = Configuration(m);
+	to = ScannerConfiguration(m);
 	return true;
 }
 
-bool Scanner::setConfiguration(Configuration &conf) {
+bool Scanner::setConfiguration(ScannerConfiguration &conf) {
 	connection.send(Message::setConfig(conf));
 	Message m = connection.receive();
 	return m.ok();
 }
 
-bool Scanner::scanPage(ImageReader &page) {
+string Scanner::getPageString(nat id) {
+	stringstream ss;
+	ss << "Scanning page " << id;
+	return ss.str();
+}
+
+string Scanner::getBadFormatString(nat id) {
+	stringstream ss;
+	ss << "Bad input type: " << id;
+	return ss.str();
+}
+
+bool Scanner::scanPage(ImageReader &page, Progress &progress) {
 	Message m = connection.receive();
+	nat status = 0;
 	while (m.ok()) {
 		if (m.getHeader().type == 0xE) break;
 
 		switch (m.getHeader().type) {
 			case 0x5:
-				if (!page.addData(m)) return fail("Invalid data occurred");
+				status = page.addData(m, progress);
+				if (status != 0) return fail(getBadFormatString(status));
 				break;
 			case 0x4:
-				return fail("ADF paper misfeed.");
+				return fail("ADF paper mispick.");
 			case 0xA:
 			case 0xB:
 				//Sent between pages.
 				break;
 			default:
-				logTo << "Unknown message: " << hex << m.getHeader().type << endl;
+				//logTo << "Unknown message: " << hex << m.getHeader().type << endl;
 				break;
 		}
 
@@ -82,15 +96,22 @@ bool Scanner::scanInternal(Output &to) {
 	bool useAdf = usingAdf();
 	logTo << (useAdf ? "Using adf" : "Not using adf") << endl;
 
-	Configuration c;
+	if (useAdf) {
+		if (settings.dpi < 100) logTo << "Warning: Scanning with the ADF in low resolutions will cause invalid images." << endl;
+	}
+
+	ScannerConfiguration c;
 	if (!getConfiguration(c)) return fail("Failed to get the configuration.");
 
-	c.dpi = 75;
 	c.colorType = 2;
 	c.colorType2 = 1;
 	//Apply settings here
+	c.apply(settings);
 
 	if (!setConfiguration(c)) return fail("Failed to set the configuration.");
+
+	connection.send(Message(0, 0x8));
+	if (!connection.receive().ok()) return fail("Unknown error.");
 
 	connection.send(Message::startScan());
 
@@ -98,10 +119,11 @@ bool Scanner::scanInternal(Output &to) {
 
 	bool morePages = true;
 	while (morePages) {
-		logTo << "Scanning page " << ++pageNumber << "..." << endl;
-
-		ImageReader reader(c, to.nextPage());
-		if (!scanPage(reader)) return false;
+		{
+			Progress progress(logTo, getPageString(++pageNumber), c.yPixels() * 3);
+			ImageReader reader(c, to.nextPage());
+			if (!scanPage(reader, progress)) return false;
+		}
 
 		Message m = connection.receive(); //Should be a 0xD
 

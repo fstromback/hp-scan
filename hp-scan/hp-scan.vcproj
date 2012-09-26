@@ -182,7 +182,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Configuration.cpp"
+				RelativePath=".\Commands.cpp"
 				>
 			</File>
 			<File
@@ -214,7 +214,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Point.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Progress.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Rect.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Scanner.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ScannerConfiguration.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Settings.cpp"
 				>
 			</File>
 			<File
@@ -236,7 +256,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Configuration.h"
+				RelativePath=".\Commands.h"
 				>
 			</File>
 			<File
@@ -268,7 +288,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Point.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Progress.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Rect.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Scanner.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ScannerConfiguration.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Settings.h"
 				>
 			</File>
 			<File

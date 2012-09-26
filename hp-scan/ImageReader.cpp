@@ -6,7 +6,7 @@
 
 using namespace std;
 
-ImageReader::ImageReader(Configuration &config, Image *to) : to(to), config(config) {
+ImageReader::ImageReader(ScannerConfiguration &config, Image *to) : to(to), config(config) {
 	scanline = new Color[config.xPixels()];
 	flushedLines = 0;
 	to->initialize(config.xPixels(), config.yPixels());
@@ -18,7 +18,7 @@ ImageReader::~ImageReader() {
 	delete to;
 }
 
-bool ImageReader::addData(Message &data) {
+nat ImageReader::addData(Message &data, Progress &p) {
 	nat type = data.getNat(0 * 4);
 	nat line = data.getNat(1 * 4);
 	nat height = data.getNat(2 * 4);
@@ -26,10 +26,10 @@ bool ImageReader::addData(Message &data) {
 	nat width = data.getNat(4 * 4);
 	nat width2 = data.getNat(5 * 4);
 
-	cout << dec << setw(5) << "Packet: " << type << " " << line << " " << height << " " << mode << " " << width << " " << width2 << " " << data.getSize() - headerSize << endl;
-	
-	//BOOST_ASSERT(type == 10); //The only one tested so far.
+	p.update(line);
 
+	//cout << dec << setw(5) << "Packet: " << type << " " << line << " " << height << " " << mode << " " << width << " " << width2 << " " << data.getSize() - headerSize << endl;
+	
 	if (type == 10) {
 
 		nat myWidth = config.xPixels();
@@ -43,7 +43,7 @@ bool ImageReader::addData(Message &data) {
 			if (channel == 2) flushScanline();
 		}
 
-		return true;
+		return 0;
 	} else if (type == 12) {
 		nat myWidth = config.xPixels();
 		for (nat y = 0; y < height; y++) {
@@ -52,14 +52,15 @@ bool ImageReader::addData(Message &data) {
 			nat totalY = line + y;
 			nat channel = totalY % 3;
 
-			addReverseScanline(d + (width - myWidth), myWidth, channel);
+			//addReverseScanline(d + (width - myWidth), myWidth, channel);
+			addReverseScanline(d, myWidth, channel);
 			if (channel == 2) flushScanline();
 		}
 
-		return true;
+		return 0;
 	}
 
-	return false;
+	return type;
 }
 
 void ImageReader::addReverseScanline(const byte *data, nat width, nat channel) {
@@ -78,8 +79,10 @@ void ImageReader::addScanline(const byte *data, nat width, nat channel) {
 }
 
 void ImageReader::flushScanline() {
-	to->addLine(scanline);
-	flushedLines++;
+	if (flushedLines < config.yPixels()) {
+		to->addLine(scanline);
+		flushedLines++;
+	}
 }
 
 void ImageReader::fillImage() {
@@ -87,6 +90,7 @@ void ImageReader::fillImage() {
 	nat w = config.xPixels();
 
 	if (flushedLines < h) for (nat x = 0; x < w; x++) scanline[x] = Color(255, 255, 255);
+	//cout << "Filling " << (h - flushedLines) << " empty lines..." << endl;
 	while (flushedLines < h) {
 		flushScanline();
 	}

@@ -1,11 +1,13 @@
 #pragma once
 
 #include "Message.h"
+#include "Rect.h"
+#include "Settings.h"
 
-class Configuration {
+class ScannerConfiguration {
 public:
-	Configuration();
-	Configuration(const Message &msg);
+	ScannerConfiguration();
+	ScannerConfiguration(const Message &msg);
 
 	operator Message() const;
 
@@ -14,13 +16,15 @@ public:
 	nat dpi; //75, 100, 150, 200, 300, 600, 1200
 	nat colorType; //0x2 = RGB, 0x6 = grey
 	nat colorType2; //0x1 = RGB, 0x0 = grey
-	nat xMin, xMax;
-	nat yMin, yMax;
+
+	Rect pos;
+	Rect defaultPos;
 
 	nat xPixels() const;
 	nat yPixels() const;
 
-	void apply(const Configuration &other);
+	void apply(const Settings &from);
+	void apply(const ScannerConfiguration &other);
 	void dump();
 private:
 	bool validSettings;

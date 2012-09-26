@@ -2,6 +2,7 @@
 
 #include "Output.h"
 
+#include <fstream>
 #include <string>
 #include <sstream>
 
@@ -26,7 +27,7 @@ private:
 	string getName(nat id) {
 		ostringstream ss;
 		ss << path;
-		ss << id;
+		if (id != 0) ss << id;
 		ss << ".";
 		ss << T::extension();
 		return ss.str();
