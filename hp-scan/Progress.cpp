@@ -14,6 +14,7 @@ Progress::~Progress() {
 void Progress::update(nat v) {
 	to << '\r';
 	print(v);
+	to.flush();
 }
 
 void Progress::print(nat v) {
