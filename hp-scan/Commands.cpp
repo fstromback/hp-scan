@@ -15,6 +15,8 @@ bool Commands::parseCommandLine(int argc, char *argv[]) {
 			if (++i >= argc) return false;
 			if (a == "-f") {
 				format = argv[i];
+			} else if (a == "-t") {
+				format = argv[i];
 			} else if (a == "-dpi") {
 				dpi = atoi(argv[i]);
 			} else if (a == "-s") {

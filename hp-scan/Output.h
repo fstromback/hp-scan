@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Image.h"
+
 #include <string>
 
 using namespace std;

@@ -24,8 +24,8 @@ void printUsage(char *name) {
 	cout << "output name is the name of the outputted file, without extension." << endl;
 	cout << endl;
 	cout << "Sample usage:" << endl;
-	cout << name << " my-printer myScan - Scan at 600 dpi to png files named myScan.png, myScan1.png..." << endl;
-	cout << name << " my-printer -dpi 300 -f png myScan - Scan at 300 dpi to png files named myScan.png, myScan1.png..." << endl;
+	cout << name << " my-printer myScan" << endl << "- Scan at 600 dpi to png files named myScan.png, myScan1.png..." << endl;
+	cout << name << " my-printer -dpi 300 -f png myScan" << endl << "- Scan at 300 dpi to png files named myScan.png, myScan1.png..." << endl;
 }
 
 #pragma warning (disable : 4996)
