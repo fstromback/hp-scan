@@ -25,7 +25,7 @@ compile=g++ <file> -c -o <output>
 #Command to link the intermediate files into an executable.
 #<files> is the list of intermediate files and
 #<output> is the name of the final executable to be created.
-link=g++ <files> -o <output> -lboost_system -lboost_thread -lpng -lz -lpthread
+link=g++ <files> -o <output> -lboost_system -lboost_thread -lpng -lz -lpthread -lhpdf
 
 #The directory to be used for intermediate files
 build=build/
