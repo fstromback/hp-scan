@@ -3,6 +3,7 @@
 #include "Output.h"
 
 #include <hpdf.h>
+#include <list>
 #include <string>
 
 using namespace std;
@@ -17,6 +18,11 @@ public:
 private:
 	string outputTo;
 	HPDF_Doc pdf;
+
+	typedef std::list<string> FileList;
+	nat tmpId;
+	FileList tmpList;
+	string getTmpName();
 
 	static void error_handler(HPDF_STATUS error_no, HPDF_STATUS detail_no, void *userData);
 };

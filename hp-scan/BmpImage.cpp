@@ -9,7 +9,7 @@ BmpImage::~BmpImage() {
 	delete to;
 }
 
-void BmpImage::initialize(nat w, nat h) {
+void BmpImage::initialize(nat w, nat h, nat dpi) {
 	this->w = w;
 	this->h = h;
 	atY = 0;

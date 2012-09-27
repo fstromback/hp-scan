@@ -7,18 +7,19 @@
 
 class PdfImage : public Image {
 public:
-	PdfImage(HPDF_Doc doc, HPDF_Page page, const string &name);
+	PdfImage(HPDF_Doc doc, HPDF_Page page, const string &tmpName);
 	virtual ~PdfImage();
 
-	virtual void initialize(nat w, nat h);
+	virtual void initialize(nat w, nat h, nat dpi);
 	virtual void addLine(Color *scanline);
 	virtual void finish();
 private:
 	HPDF_Doc doc;
 	HPDF_Page page;
-	PngImage pngImage;
-	string name;
-	nat w, h;
+	PngImage *pngImage;
+	string tmpName;
+	nat w, h, dpi;
 
-	static string getTmpFile(const string &name);
+	float pageWidth() const;
+	float pageHeight() const;
 };

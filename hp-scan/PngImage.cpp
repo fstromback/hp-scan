@@ -16,7 +16,7 @@ PngImage::~PngImage() {
 	if (to) delete to;
 }
 
-void PngImage::initialize(nat w, nat h) {
+void PngImage::initialize(nat w, nat h, nat dpi) {
 	if (pngInfo == null) return;
 
 	//png_set_read_fn(pngPtr, this, &PngImage::read);

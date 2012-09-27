@@ -9,7 +9,7 @@ public:
 	BmpImage(std::ostream *to);
 	virtual ~BmpImage();
 
-	virtual void initialize(nat w, nat h);
+	virtual void initialize(nat w, nat h, nat dpi);
 	virtual void addLine(Color *line);
 	virtual void finish();
 	static string extension() { return "bmp"; };

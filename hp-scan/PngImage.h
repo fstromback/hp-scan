@@ -13,7 +13,7 @@ public:
 	PngImage(ostream *to);
 	virtual ~PngImage();
 
-	virtual void initialize(nat w, nat h);
+	virtual void initialize(nat w, nat h, nat dpi);
 	virtual void addLine(Color *scanline);
 	virtual void finish();
 	static string extension() { return "png"; };

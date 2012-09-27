@@ -9,7 +9,7 @@ using namespace std;
 ImageReader::ImageReader(ScannerConfiguration &config, Image *to) : to(to), config(config) {
 	scanline = new Color[config.xPixels()];
 	flushedLines = 0;
-	to->initialize(config.xPixels(), config.yPixels());
+	to->initialize(config.xPixels(), config.yPixels(), config.dpi);
 }
 
 ImageReader::~ImageReader() {
