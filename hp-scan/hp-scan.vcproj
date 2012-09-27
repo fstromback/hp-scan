@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="E:/visual studio 2008/lib/boost_1_50_0/; E:/visual studio 2008/lib/lpng1060/; E:/visual studio 2008/lib/zlib/"
+				AdditionalIncludeDirectories="E:/visual studio 2008/lib/boost_1_50_0/; E:/visual studio 2008/lib/lpng1060/; E:/visual studio 2008/lib/zlib/; E:/visual studio 2008/lib/libharu-2.0.8/include/"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../lib/zlibd.lib ../lib/libpngd.lib"
+				AdditionalDependencies="../lib/zlibd.lib ../lib/libpngd.lib ../lib/libhpdf.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -210,6 +210,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PdfImage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PdfOutput.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\PngImage.cpp"
 				>
 			</File>
@@ -281,6 +289,14 @@
 			</File>
 			<File
 				RelativePath=".\Output.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PdfImage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PdfOutput.h"
 				>
 			</File>
 			<File
