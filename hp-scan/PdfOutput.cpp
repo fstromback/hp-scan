@@ -3,6 +3,9 @@
 #include "PdfImage.h"
 
 #include <sstream>
+#include <iostream>
+
+using namespace std;
 
 PdfOutput::PdfOutput(const string &path) : outputTo(path + ".pdf"), tmpId(0) {
 	pdf = HPDF_New(error_handler, null);

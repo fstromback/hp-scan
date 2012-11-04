@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "PngImage.h"
 
+#include <iostream>
+
+using namespace std;
+
 PngImage::PngImage(ostream *to) : to(to) {
 	pngPtr = null;
 	pngInfo = null;

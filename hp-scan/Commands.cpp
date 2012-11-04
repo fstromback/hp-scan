@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "Commands.h"
 
+#include <iostream>
+
+using namespace std;
+
 Commands::Commands() : dpi(600), format("png"), size("A4") {}
 
 

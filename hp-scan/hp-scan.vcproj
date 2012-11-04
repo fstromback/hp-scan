@@ -116,6 +116,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="E:/visual studio 2008/lib/boost_1_50_0/; E:/visual studio 2008/lib/lpng1060/; E:/visual studio 2008/lib/zlib/; E:/visual studio 2008/lib/libharu-2.0.8/include/"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -134,7 +135,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="lib/libpng.lib lib/zlib.lib"
+				AdditionalDependencies="../lib/libpng.lib ../lib/zlib.lib ../lib/libhpdf.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="1"

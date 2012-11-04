@@ -4,6 +4,7 @@
 
 #include <boost/asio.hpp>
 #include <iomanip>
+#include <iostream>
 
 using namespace std;
 

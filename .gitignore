@@ -38,6 +38,7 @@ Thumbs.db
 *~
 
 Debug/
+Release/
 hp-scan/build/
 hp-scan/hp-scan
 *.dat
