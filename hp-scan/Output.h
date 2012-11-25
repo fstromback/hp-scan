@@ -14,4 +14,5 @@ public:
 	virtual void finish() = 0;
 
 	static Output *create(const string &type, const string &path);
+	static Output *createQuickFetcher(Output *target, const string &tmpName);
 };

@@ -21,7 +21,10 @@ void printUsage(char *name) {
 	cout << "-f    : Output format. Currently bmp, png and pdf are supported." << endl;
 	cout << "-dpi  : The resolution to scan (in dpi). 75, 100, 150, 200, 300, 600 or 1200." << endl;
 	cout << "-s    : The size of the source paper(s). For example: A4." << endl;
+	cout << "-q    : Quick fetching mode." << endl;
 	cout << "output name is the name of the outputted file, without extension." << endl;
+	cout << "If scanning fails, try using the quick fetch mode, which will delay the conversion of the scanned data ";
+	cout << "until the scanning is completed." << endl;
 	cout << endl;
 	cout << "Sample usage:" << endl;
 	cout << name << " my-printer myScan" << endl << "- Scan at 600 dpi to png files named myScan.png, myScan1.png..." << endl;
@@ -41,6 +44,8 @@ int main(int argc, char* argv[]) {
 		cmd.print();
 
 		Output *output = Output::create(cmd.format, cmd.fileName);
+		if (cmd.quickFetch) output = Output::createQuickFetcher(output, cmd.fileName);
+
 		if (output) {
 			Scanner scanner(cmd.host(), cmd.port());
 
@@ -60,7 +65,9 @@ int main(int argc, char* argv[]) {
 	}
 
 #ifdef WIN32
+#ifdef DEBUG
 	getch();
+#endif
 #endif
 	return result;
 }

@@ -11,7 +11,7 @@
 			<DebugSettings
 				Command="$(TargetPath)"
 				WorkingDirectory=""
-				CommandArguments="192.168.0.108 -f pdf output"
+				CommandArguments="192.168.0.108 -q -f pdf output"
 				Attach="false"
 				DebuggerType="3"
 				Remote="1"

@@ -13,6 +13,7 @@ public:
 	string format;
 	nat dpi;
 	string size;
+	bool quickFetch;
 
 	bool parseCommandLine(int argc, char *argv[]);
 	string host() const;

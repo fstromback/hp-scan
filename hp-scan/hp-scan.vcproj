@@ -231,6 +231,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\QuickFetch.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Rect.cpp"
 				>
 			</File>
@@ -310,6 +314,10 @@
 			</File>
 			<File
 				RelativePath=".\Progress.h"
+				>
+			</File>
+			<File
+				RelativePath=".\QuickFetch.h"
 				>
 			</File>
 			<File

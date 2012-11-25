@@ -6,6 +6,8 @@
 #include "PngImage.h"
 #include "BmpImage.h"
 
+#include "QuickFetch.h"
+
 #include <boost/algorithm/string.hpp>
 
 Output::~Output() {}
@@ -17,4 +19,8 @@ Output *Output::create(const string &type, const string &path) {
 	if (t == "pdf") return new PdfOutput(path);
 
 	return null;
+}
+
+Output *Output::createQuickFetcher(Output *target, const string &tmpName) {
+	return new QuickFetch(target, tmpName);
 }

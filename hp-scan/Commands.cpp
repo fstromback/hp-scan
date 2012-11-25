@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Commands::Commands() : dpi(600), format("png"), size("A4") {}
+Commands::Commands() : dpi(600), format("png"), size("A4"), quickFetch(false) {}
 
 
 bool Commands::parseCommandLine(int argc, char *argv[]) {
@@ -16,17 +16,22 @@ bool Commands::parseCommandLine(int argc, char *argv[]) {
 		string a = argv[i];
 		if (a == "") {
 		} else if (a[0] == '-') {
-			if (++i >= argc) return false;
-			if (a == "-f") {
-				format = argv[i];
-			} else if (a == "-t") {
-				format = argv[i];
-			} else if (a == "-dpi") {
-				dpi = atoi(argv[i]);
-			} else if (a == "-s") {
-				size = argv[i];
+			if (a == "-q") {
+				quickFetch = true;
 			} else {
-				return false;
+
+				if (++i >= argc) return false;
+				if (a == "-f") {
+					format = argv[i];
+				} else if (a == "-t") {
+					format = argv[i];
+				} else if (a == "-dpi") {
+					dpi = atoi(argv[i]);
+				} else if (a == "-s") {
+					size = argv[i];
+				} else {
+					return false;
+				}
 			}
 		} else if (i + 1 == argc) {
 			fileName = a;
@@ -51,5 +56,7 @@ string Commands::port() const {
 }
 
 void Commands::print() const {
-	cout << "Scanning from " << host() << " in " << dpi << " dpi to " << format << "..." << endl;
+	cout << "Scanning from " << host() << " in " << dpi << " dpi to " << format;
+	if (quickFetch) cout << " using QuickFetch";
+	cout << "..." << endl;
 }
